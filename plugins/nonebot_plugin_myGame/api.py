@@ -1,7 +1,7 @@
 import nonebot
 from fastapi import FastAPI
 from nonebot.adapters.onebot.v11 import MessageSegment
-from plugins.nonebot_plugin_myGame import TARGET_MAIN_GROUP_ID, TARGET_USER_ID
+from plugins.nonebot_plugin_myGame.consts import TARGET_MAIN_GROUP_ID, TARGET_USER_ID
 
 print("api loading")
 

@@ -3,7 +3,7 @@ from typing import Optional
 from nonebot.adapters.onebot.v11 import Bot, MessageSegment
 import time
 from typing import Dict
-from plugins.nonebot_plugin_myGame import  TARGET_USER_ID,TARGET_MAIN_GROUP_ID
+from plugins.nonebot_plugin_myGame.consts import  TARGET_USER_ID,TARGET_MAIN_GROUP_ID
 
 
 

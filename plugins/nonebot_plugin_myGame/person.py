@@ -3,7 +3,7 @@ from typing import Optional
 from nonebot.adapters.onebot.v11 import Bot, MessageSegment
 import time
 from typing import Dict
-from plugins.nonebot_plugin_myGame.consts import  TARGET_USER_ID,TARGET_MAIN_GROUP_ID
+from plugins.nonebot_plugin_myGame.consts import  TARGET_USER_ID,MY_PRIVATE_GROUP_ID
 
 
 
@@ -37,5 +37,5 @@ class Person:
         currentTime = time.time()
         if ignoreTimeDiff or currentTime - self.lastTrainingTimestamp > 80:
             replyMessage = MessageSegment.at(TARGET_USER_ID) + " 修炼"
-            await self.bot.send_group_msg(group_id=TARGET_MAIN_GROUP_ID, message=replyMessage)
+            await self.bot.send_group_msg(group_id=MY_PRIVATE_GROUP_ID, message=replyMessage)
             self.lastTrainingTimestamp = currentTime

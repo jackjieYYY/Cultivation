@@ -1,7 +1,6 @@
 from nonebot.adapters.onebot.v11 import Bot
 
-from plugins.nonebot_plugin_myGame.person import Person
-from plugins.nonebot_plugin_myGame import personMap
+from plugins.nonebot_plugin_myGame.person import Person,personMap
 
 from nonebot import get_driver
 

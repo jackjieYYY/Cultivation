@@ -18,11 +18,11 @@ class Person:
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
+        partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
+        self.taskList.append(partySignInTask)
         await self.send(signInTask.command())
         time.sleep(3)
-        partySignInTask = Task(TaskType.PARTYSIGNIN)
-        self.taskList.append(partySignInTask)
         await self.send(partySignInTask.command())
         while True:
             time.sleep(3)

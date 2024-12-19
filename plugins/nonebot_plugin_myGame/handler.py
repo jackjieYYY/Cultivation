@@ -16,4 +16,5 @@ async def handle_group_message(bot: Bot, event: GroupMessageEvent):
     if not person:
         return
     await person.receive(str(event.message))
+    print("done")
     return

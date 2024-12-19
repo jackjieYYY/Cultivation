@@ -14,7 +14,7 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
-        asyncio.run(self.init())  # 启动事件循环并运行异步方法
+        asyncio.create_task(self.init())
         
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)

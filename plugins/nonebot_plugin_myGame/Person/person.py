@@ -50,7 +50,7 @@ class Person:
 
     async def training(self) -> None:
         print(self.stateMerchine.currentState)
-        if self.stateMerchine.isState(State.TRAINING):
+        if not self.stateMerchine.isState(State.TRAINING):
             print("Not in TRAINING state")
             return
         trainTask = Task(TaskType.TRAINING)

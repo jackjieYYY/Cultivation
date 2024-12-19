@@ -27,10 +27,8 @@ class Person:
         time.sleep(3)
         while True:
             if len(self.taskList) == 0:
-                self.state.setState(State.TRAINING)
-                trainTask = Task(TaskType.TRAINING)
-                self.taskList.append(trainTask)
-                break
+                self.startTraining()
+                return
 
     async def send(self, message) -> None:
         await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
@@ -41,7 +39,12 @@ class Person:
             if any(keyword in message for keyword in task.completedKeyWords()):
                 print(f"Task completed: {task.type}")
                 self.taskList.remove(task)
-        
+    
+    async def startTraining(self) -> None:
+        self.state.setState(State.TRAINING)
+        trainTask = Task(TaskType.TRAINING)
+        self.send(trainTask.command())
+        self.taskList.append(trainTask)
 
     async def training(self) -> None:
         if self.state != State.TRAINING:

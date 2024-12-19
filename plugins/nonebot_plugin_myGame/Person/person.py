@@ -19,14 +19,14 @@ class Person:
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
-        # partySignInTask = Task(TaskType.PARTYSIGNIN)
+        partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
         await asyncio.sleep(1)
-        # self.taskList.append(partySignInTask)
+        self.taskList.append(partySignInTask)
         await self.send(signInTask.command())
         print("signInTask.command done")
         await asyncio.sleep(3)
-        # await self.send(partySignInTask.command())
+        await self.send(partySignInTask.command())
         while True:
             print("start to wait")
             await asyncio.sleep(3)
@@ -34,6 +34,7 @@ class Person:
             if len(self.taskList) == 0:
                 self.state.setState(State.TRAINING)
                 await self.training()
+                print("End")
                 return
 
     async def send(self, message) -> None:

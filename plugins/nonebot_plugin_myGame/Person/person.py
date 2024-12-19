@@ -1,5 +1,6 @@
 import asyncio
 import threading
+import time
 from typing import List
 from nonebot.adapters.onebot.v11 import Bot
 
@@ -14,6 +15,7 @@ class Person:
         self.stateMerchine = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
+        self.lastTrainingTimestamp: int = 0
         asyncio.create_task(self.init())
 
     async def init(self) -> None:
@@ -49,5 +51,14 @@ class Person:
         if not self.stateMerchine.isState(State.TRAINING):
             return
         trainTask = Task(TaskType.TRAINING)
-        self.taskList.append(trainTask)
-        await self.send(trainTask.command())
+        currentTime = time.time()
+        if len(self.taskList) == 0:
+            self.taskList.append(trainTask)
+            await self.send(trainTask.command())
+            self.lastTrainingTimestamp = currentTime
+            return
+        if currentTime - self.lastTrainingTimestamp > 80:
+            await self.send(trainTask.command())
+            self.lastTrainingTimestamp = currentTime
+            return
+

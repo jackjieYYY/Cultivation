@@ -29,4 +29,4 @@ class Task:
         if self.type == TaskType.SIGNIN:
             return ["贪心的人","签到成功"]
         if self.type == TaskType.PARTYSIGNIN:
-            return ["道友已经领取过了","道友成功领取到"]
+            return ["道友已经","道友成功"]

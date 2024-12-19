@@ -24,10 +24,10 @@ class Person:
         partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(partySignInTask)
         await self.send(partySignInTask.command())
-        time.sleep(3)
         while True:
+            time.sleep(3)
             if len(self.taskList) == 0:
-                self.startTraining()
+                await self.startTraining()
                 return
 
     async def send(self, message) -> None:
@@ -43,7 +43,7 @@ class Person:
     async def startTraining(self) -> None:
         self.state.setState(State.TRAINING)
         trainTask = Task(TaskType.TRAINING)
-        self.send(trainTask.command())
+        await self.send(trainTask.command())
         self.taskList.append(trainTask)
 
     async def training(self) -> None:

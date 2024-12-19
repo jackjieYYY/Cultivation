@@ -30,4 +30,6 @@ class Task:
             return ["贪心的人","签到成功"]
         if self.type == TaskType.PARTYSIGNIN:
             return ["道友已经","道友成功"]
+        if self.type == TaskType.TRAINING:
+            return ["本次修炼增加"]
         return []

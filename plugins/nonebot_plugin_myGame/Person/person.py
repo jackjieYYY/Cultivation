@@ -32,6 +32,7 @@ class Person:
         time.sleep(3)
         # await self.send(partySignInTask.command())
         while True:
+            print("start to wait")
             time.sleep(3)
             print(len(self.taskList))
             if len(self.taskList) == 0:

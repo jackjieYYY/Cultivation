@@ -28,7 +28,8 @@ class Person:
         self.taskList.append(signInTask)
         time.sleep(3)
         # self.taskList.append(partySignInTask)
-        self.send(signInTask.command())
+        await self.send(signInTask.command())
+        print("signInTask.command done")
         time.sleep(3)
         # await self.send(partySignInTask.command())
         while True:

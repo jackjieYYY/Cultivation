@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 from typing import List, Optional
 from nonebot.adapters.onebot.v11 import Bot, MessageSegment
@@ -14,6 +15,7 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
+        asyncio.create_task(self.init())
 
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)

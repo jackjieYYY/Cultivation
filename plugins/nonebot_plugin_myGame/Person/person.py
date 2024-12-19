@@ -41,7 +41,7 @@ class Person:
                 return
 
     async def send(self, message) -> None:
-        await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
+        await asyncio.wait_for(self.bot.send_group_msg(group_id=self.privateGroup, message=message), timeout=5)
         
     async def receive(self, message: str) -> None:
         print(message)

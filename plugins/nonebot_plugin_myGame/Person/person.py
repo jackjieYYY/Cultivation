@@ -28,7 +28,6 @@ class Person:
         await self.send(partySignInTask.command())
         while True:
             await asyncio.sleep(3)
-            print(len(self.taskList))
             if len(self.taskList) == 0:
                 self.stateMerchine.setState(State.TRAINING)
                 await self.training()
@@ -38,7 +37,6 @@ class Person:
         await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
 
     async def receive(self, message: str) -> None:
-        print(message)
         # 遍历任务列表，检查并移除匹配的任务
         for task in self.taskList[:]:  # 创建副本以安全地修改列表
             if any(keyword in message for keyword in task.completedKeyWords()):
@@ -48,10 +46,8 @@ class Person:
                     await self.training()
 
     async def training(self) -> None:
-        print(self.stateMerchine.currentState)
         if not self.stateMerchine.isState(State.TRAINING):
             return
         trainTask = Task(TaskType.TRAINING)
-        print(trainTask.command())
         self.taskList.append(trainTask)
         await self.send(trainTask.command())

@@ -27,7 +27,9 @@ class Person:
         time.sleep(3)
         while True:
             if len(self.taskList) == 0:
-                self.state.nextState()
+                self.state.setState(State.TRAINING)
+                trainTask = Task(TaskType.TRAINING)
+                self.taskList.append(trainTask)
                 break
 
     async def send(self, message) -> None:

@@ -1,7 +1,6 @@
-import asyncio
-import datetime
-from typing import List, Optional
-from nonebot.adapters.onebot.v11 import Bot, MessageSegment
+import threading
+from typing import List
+from nonebot.adapters.onebot.v11 import Bot
 import time
 
 from plugins.nonebot_plugin_myGame.Person.state import StateMachine, State
@@ -15,7 +14,7 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
-        asyncio.create_task(self.init())
+        threading.Thread(target=self.init).start()
 
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)

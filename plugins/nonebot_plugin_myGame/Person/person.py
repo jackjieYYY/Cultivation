@@ -2,7 +2,6 @@ import asyncio
 import threading
 from typing import List
 from nonebot.adapters.onebot.v11 import Bot
-import time
 
 from plugins.nonebot_plugin_myGame.Person.state import StateMachine, State
 from plugins.nonebot_plugin_myGame.Person.task import Task, TaskType
@@ -26,23 +25,23 @@ class Person:
         signInTask = Task(TaskType.SIGNIN)
         # partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
-        time.sleep(1)
+        await asyncio.sleep(1)
         # self.taskList.append(partySignInTask)
-        self.send(signInTask.command())
+        await self.send(signInTask.command())
         print("signInTask.command done")
-        time.sleep(3)
+        await asyncio.sleep(3)
         # await self.send(partySignInTask.command())
         while True:
             print("start to wait")
-            time.sleep(3)
+            await asyncio.sleep(3)
             print(len(self.taskList))
             if len(self.taskList) == 0:
                 self.state.setState(State.TRAINING)
                 await self.training()
                 return
 
-    def send(self, message) -> None:
-        self.bot.send_group_msg(group_id=self.privateGroup, message=message)
+    async def send(self, message) -> None:
+        await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
         
     async def receive(self, message: str) -> None:
         print(message)

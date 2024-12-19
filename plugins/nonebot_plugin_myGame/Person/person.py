@@ -33,8 +33,10 @@ class Person:
         # await self.send(partySignInTask.command())
         while True:
             time.sleep(3)
+            print(len(self.taskList))
             if len(self.taskList) == 0:
-                await self.startTraining()
+                self.state.setState(State.TRAINING)
+                await self.training()
                 return
 
     async def send(self, message) -> None:
@@ -47,12 +49,6 @@ class Person:
             if any(keyword in message for keyword in task.completedKeyWords()):
                 print(f"Task completed: {task.type}")
                 self.taskList.remove(task)
-    
-    async def startTraining(self) -> None:
-        self.state.setState(State.TRAINING)
-        trainTask = Task(TaskType.TRAINING)
-        await self.send(trainTask.command())
-        self.taskList.append(trainTask)
 
     async def training(self) -> None:
         if self.state != State.TRAINING:

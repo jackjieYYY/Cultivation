@@ -20,12 +20,12 @@ class Person:
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
-        partySignInTask = Task(TaskType.PARTYSIGNIN)
+        # partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
-        self.taskList.append(partySignInTask)
+        # self.taskList.append(partySignInTask)
         await self.send(signInTask.command())
         time.sleep(3)
-        await self.send(partySignInTask.command())
+        # await self.send(partySignInTask.command())
         while True:
             time.sleep(3)
             if len(self.taskList) == 0:
@@ -36,7 +36,6 @@ class Person:
         await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
         
     async def receive(self, message: str) -> None:
-        print(message + "\n")
         # 遍历任务列表，检查并移除匹配的任务
         for task in self.taskList[:]:  # 创建副本以安全地修改列表
             if any(keyword in message for keyword in task.completedKeyWords()):

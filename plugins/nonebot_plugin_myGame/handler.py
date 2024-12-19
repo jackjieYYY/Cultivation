@@ -1,7 +1,7 @@
-from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, MessageSegment
+from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent
 from nonebot import on_message
 from nonebot.rule import Rule
-from plugins.nonebot_plugin_myGame.consts import MY_PRIVATE_GROUP_ID, TARGET_KEYWORDS
+from plugins.nonebot_plugin_myGame.consts import MY_PRIVATE_GROUP_ID
 from plugins.nonebot_plugin_myGame.data import getPerson
 
 group_message_handler = on_message(

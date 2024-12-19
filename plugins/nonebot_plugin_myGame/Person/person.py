@@ -24,17 +24,14 @@ class Person:
         await asyncio.sleep(1)
         self.taskList.append(partySignInTask)
         await self.send(signInTask.command())
-        print("signInTask.command done")
         await asyncio.sleep(3)
         await self.send(partySignInTask.command())
         while True:
-            print("start to wait")
             await asyncio.sleep(3)
             print(len(self.taskList))
             if len(self.taskList) == 0:
                 self.stateMerchine.setState(State.TRAINING)
                 await self.training()
-                print("End")
                 return
 
     async def send(self, message) -> None:
@@ -47,14 +44,14 @@ class Person:
             if any(keyword in message for keyword in task.completedKeyWords()):
                 print(f"Task completed: {task.type}")
                 self.taskList.remove(task)
+                if task.type == TaskType.TRAINING:
+                    await self.training()
 
     async def training(self) -> None:
         print(self.stateMerchine.currentState)
         if not self.stateMerchine.isState(State.TRAINING):
-            print("Not in TRAINING state")
             return
         trainTask = Task(TaskType.TRAINING)
         print(trainTask.command())
         self.taskList.append(trainTask)
         await self.send(trainTask.command())
-        print("Traning Done")

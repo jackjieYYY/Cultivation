@@ -1,3 +1,4 @@
+import asyncio
 import threading
 from typing import List
 from nonebot.adapters.onebot.v11 import Bot
@@ -14,8 +15,12 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
-        threading.Thread(target=self.init).start()
-
+        threading.Thread(target=self._run_init_in_thread).start()
+        
+    def _run_init_in_thread(self) -> None:
+        """在多线程中运行异步协程"""
+        asyncio.run(self.init())  # 启动事件循环并运行异步方法
+        
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)

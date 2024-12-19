@@ -26,9 +26,9 @@ class Person:
         signInTask = Task(TaskType.SIGNIN)
         # partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
-        time.sleep(3)
+        time.sleep(1)
         # self.taskList.append(partySignInTask)
-        await self.send(signInTask.command())
+        self.send(signInTask.command())
         print("signInTask.command done")
         time.sleep(3)
         # await self.send(partySignInTask.command())
@@ -41,8 +41,8 @@ class Person:
                 await self.training()
                 return
 
-    async def send(self, message) -> None:
-        await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
+    def send(self, message) -> None:
+        self.bot.send_group_msg(group_id=self.privateGroup, message=message)
         
     async def receive(self, message: str) -> None:
         print(message)

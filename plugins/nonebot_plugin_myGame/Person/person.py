@@ -34,6 +34,7 @@ class Person:
         await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
         
     async def receive(self, message: str) -> None:
+        print(message + "\n")
         # 遍历任务列表，检查并移除匹配的任务
         for task in self.taskList[:]:  # 创建副本以安全地修改列表
             if any(keyword in message for keyword in task.completedKeyWords()):

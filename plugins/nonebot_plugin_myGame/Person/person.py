@@ -49,6 +49,7 @@ class Person:
                 self.taskList.remove(task)
 
     async def training(self) -> None:
+        print(self.stateMerchine.currentState)
         if self.stateMerchine.isState(State.TRAINING):
             print("Not in TRAINING state")
             return

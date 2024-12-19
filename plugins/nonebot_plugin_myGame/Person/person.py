@@ -14,10 +14,6 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
-        threading.Thread(target=self._run_init_in_thread).start()
-        
-    def _run_init_in_thread(self) -> None:
-        """在多线程中运行异步协程"""
         asyncio.run(self.init())  # 启动事件循环并运行异步方法
         
     async def init(self) -> None:
@@ -41,7 +37,7 @@ class Person:
                 return
 
     async def send(self, message) -> None:
-        await asyncio.wait_for(self.bot.send_group_msg(group_id=self.privateGroup, message=message), timeout=5)
+        await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
         
     async def receive(self, message: str) -> None:
         print(message)

@@ -15,6 +15,9 @@ class StateMachine:
     def setState(self, state: State):
         self.currentState = state
 
+    def isState(self, state: State) -> bool:
+        return self.currentState == state
+
     def nextState(self):
         if self.currentState == State.EXPLORING:
             self.currentState = State.IDLE

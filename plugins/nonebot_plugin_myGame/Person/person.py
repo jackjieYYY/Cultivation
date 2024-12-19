@@ -11,13 +11,13 @@ from plugins.nonebot_plugin_myGame.consts import MY_PRIVATE_GROUP_ID
 class Person:
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
-        self.state = StateMachine()
+        self.stateMerchine = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
         asyncio.create_task(self.init())
-        
+
     async def init(self) -> None:
-        self.state.setState(State.INITIALIZING)
+        self.stateMerchine.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
         partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(signInTask)
@@ -32,14 +32,14 @@ class Person:
             await asyncio.sleep(3)
             print(len(self.taskList))
             if len(self.taskList) == 0:
-                self.state.setState(State.TRAINING)
+                self.stateMerchine.setState(State.TRAINING)
                 await self.training()
                 print("End")
                 return
 
     async def send(self, message) -> None:
         await self.bot.send_group_msg(group_id=self.privateGroup, message=message)
-        
+
     async def receive(self, message: str) -> None:
         print(message)
         # 遍历任务列表，检查并移除匹配的任务
@@ -49,7 +49,7 @@ class Person:
                 self.taskList.remove(task)
 
     async def training(self) -> None:
-        if self.state != State.TRAINING:
+        if self.stateMerchine.isState(State.TRAINING):
             print("Not in TRAINING state")
             return
         trainTask = Task(TaskType.TRAINING)

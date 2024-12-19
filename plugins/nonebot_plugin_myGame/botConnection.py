@@ -13,6 +13,7 @@ async def handle_bot_connect(bot: Bot):
     # 创建一个新的 Person 实例，并绑定到全局字典
     person = Person(bot)
     personMap[bot.self_id] = person
+    await person.init()
     print(f"Bot {bot.self_id} connected and assigned to a Person instance")
 
 # 监听断开事件

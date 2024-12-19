@@ -14,18 +14,17 @@ class Person:
         self.state = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
-        self.init()
 
     async def init(self) -> None:
         self.state.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
         self.taskList.append(signInTask)
         await self.send(signInTask.command())
-        time.sleep(5)
+        time.sleep(3)
         partySignInTask = Task(TaskType.PARTYSIGNIN)
         self.taskList.append(partySignInTask)
         await self.send(partySignInTask.command())
-        time.sleep(5)
+        time.sleep(3)
         while True:
             if len(self.taskList) == 0:
                 self.state.nextState()

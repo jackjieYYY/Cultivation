@@ -50,7 +50,10 @@ class Person:
 
     async def training(self) -> None:
         if self.state != State.TRAINING:
+            print("Not in TRAINING state")
             return
         trainTask = Task(TaskType.TRAINING)
+        print(trainTask.command())
         self.taskList.append(trainTask)
         await self.send(trainTask.command())
+        print("Traning Done")

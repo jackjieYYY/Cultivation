@@ -1,4 +1,5 @@
 import asyncio
+import json
 import threading
 import time
 from typing import List
@@ -15,10 +16,16 @@ class Person:
         self.stateMerchine = StateMachine()
         self.taskList: List[Task] = []
         self.privateGroup = MY_PRIVATE_GROUP_ID
+        self.nextInitTimestamp: int = 0
         self.lastTrainingTimestamp: int = 0
+        self.load()
         asyncio.create_task(self.init())
 
     async def init(self) -> None:
+        if time.time() < self.nextInitTimestamp:
+            self.stateMerchine.setState(State.TRAINING)
+            await self.training()
+            return
         self.stateMerchine.setState(State.INITIALIZING)
         signInTask = Task(TaskType.SIGNIN)
         partySignInTask = Task(TaskType.PARTYSIGNIN)
@@ -31,6 +38,8 @@ class Person:
         while True:
             await asyncio.sleep(3)
             if len(self.taskList) == 0:
+                self.nextInitTimestamp = int(time.time() + 12 * 60 * 60)
+                self.save()
                 self.stateMerchine.setState(State.TRAINING)
                 await self.training()
                 return
@@ -62,3 +71,26 @@ class Person:
             self.lastTrainingTimestamp = currentTime
             return
 
+    def load(self):
+        if self.bot is None:
+            return
+        filePath = f"{self.bot.self_id}.json"
+        try:
+            with open(filePath, "r") as f:
+                data = json.load(f)
+            self.from_dict(data)
+        except FileNotFoundError:
+            pass
+
+    def save(self):
+        if self.bot is None:
+            return
+        filePath = f"{self.bot.self_id}.json"
+        with open(filePath, "w") as f:
+            json.dump(self.to_dict(), f)
+
+    def to_dict(self):
+        return {"nextInitTimestamp": self.nextInitTimestamp}
+
+    def from_dict(self, data):
+        self.nextInitTimestamp = data.get("nextInitTimestamp", 0)

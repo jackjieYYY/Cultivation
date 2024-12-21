@@ -12,4 +12,4 @@ driver.register_adapter(OneBotV11Adapter)
 nonebot.load_from_toml("pyproject.toml")
 
 if __name__ == "__main__":
-    nonebot.run(host='0.0.0.0', port=9001)
+    nonebot.run(host='0.0.0.0', port=9000)
